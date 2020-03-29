@@ -1,4 +1,3 @@
-// Transcription
 function upgrade() {
   alert('Please use Google Chrome for best experience');
 }
@@ -62,17 +61,50 @@ window.onload = function() {
 
   }
 };
-
-// Timer
-function startTimer(){
-  var timer = new Timer();
-  timer.start();
-  timer.addEventListener('secondsUpdated', function (e) {
+var  timer = new Timer();
+var timerPeer2= new Timer();
+timer.start();
+timer.addEventListener('secondsUpdated', function (e) {
   $('#basicUsage').html(timer.getTimeValues().toString());
+});
+function startTimer(){
+  if(document.getElementById("btn-Demander").textContent== "Demander la parole"){
+    // start timer
+    document.getElementById("btn-Demander").textContent = "Laiser la parole"
+    timer.start();
+    timerPeer2.pause();
+    document.getElementById('idMsgProle').style.display = "none"
+  }else{
+    // pause timer
+    document.getElementById("btn-Demander").textContent  = "Demander la parole"
+    timer.pause();
+    timerPeer2.start()
+    document.getElementById('idMsgProle').style.display = "block"
+  }
+
+  timer.addEventListener('secondsUpdated', function (e) {
+    $('#basicUsage').html(timer.getTimeValues().toString());
+  });
+  timerPeer2.addEventListener('secondsUpdated', function (e) {
+    $('#basicUsage2').html(timerPeer2.getTimeValues().toString());
+  });
+
+  timer.addEventListener('started', function (e) {
+      $('#basicUsage').html(timer.getTimeValues().toString());
+  });
+  timerPeer2.addEventListener('started', function (e) {
+    $('#basicUsage2').html(timerPeer2.getTimeValues().toString());
+  });
+
+  timer.addEventListener('reset', function (e) {
+      $('#basicUsage').html(timer.getTimeValues().toString());
+  });
+  timerPeer2.addEventListener('reset', function (e) {
+    $('#basicUsage2').html(timerPeer2.getTimeValues().toString());
   });
 }
 
-//  Chat
+
 $(function() {
   var INDEX = 0; 
   let socket= io()
@@ -109,18 +141,4 @@ $(function() {
   })
   
 })
-// Demander la main
-// $(function() {
-//   let socket= io()
-//   $("#button_cont").click(function(e) {
-//     e.preventDefault();
-//     socket.emit('DemandeMain', $('#button_cont').val());
-//     $('#button_cont').hide(); 
-//     return false;
-//   })
 
-//   socket.on('mainAccordee', function(){
-//     $('#AlerteDiv').show();
-//   });
-
-// })

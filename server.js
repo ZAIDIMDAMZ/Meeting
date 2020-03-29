@@ -23,14 +23,6 @@ io.on('connection', function (socket) {
         io.emit('cool', message);
     });
 
-    // socket.on('DemandeMain',$("#button_cont").click(function(e) {
-    //     e.preventDefault();
-    //     io.emit('mainAccordee', function() {
-    //         $('AlerteDiv').show()
-    //     }) 
-    //     return false;
-    // }))
-
     socket.on('Offer', SendOffer)
     socket.on('Answer', SendAnswer)
     socket.on('disconnect', Disconnect)
